@@ -198,3 +198,139 @@ describe("BFS", function() {
     ]);
   });
 });
+
+describe("shortestPath", function() {
+  it("should return an array of the nodes of the shortest path", function() {
+    let graph = new Graph();
+    let S = new Node("S");
+    let P = new Node("P");
+    let U = new Node("U");
+    let X = new Node("X");
+    let Q = new Node("Q");
+    let Y = new Node("Y");
+    let V = new Node("V");
+    let R = new Node("R");
+    let W = new Node("W");
+    let T = new Node("T");
+
+    graph.addVertices([S, P, U, X, Q, Y, V, R, W, T]);
+
+    graph.addEdge(S, P);
+    graph.addEdge(S, U);
+
+    graph.addEdge(P, X);
+    graph.addEdge(U, X);
+
+    graph.addEdge(P, Q);
+    graph.addEdge(U, V);
+
+    graph.addEdge(X, Q);
+    graph.addEdge(X, Y);
+    graph.addEdge(X, V);
+
+    graph.addEdge(Q, R);
+    graph.addEdge(Y, R);
+
+    graph.addEdge(Y, W);
+    graph.addEdge(V, W);
+
+    graph.addEdge(R, T);
+    graph.addEdge(W, T);
+
+    expect(graph.shortestPath(S, S)).toEqual(["S"]);
+    expect(graph.shortestPath(S, W)).toEqual(["S", "U", "V", "W"]);
+  });
+});
+
+describe("hasCycle", function() {
+  it("should return false if graph has no cycles", function() {
+    let graph = new Graph();
+    let S = new Node("S");
+    let P = new Node("P");
+    let U = new Node("U");
+    let Q = new Node("Q");
+    let R = new Node("R");
+    let Y = new Node("Y");
+    let T = new Node("T");
+    let V = new Node("V");
+    let W = new Node("W");
+    let X = new Node("X");
+
+    graph.addVertices([S, P, U, Q, R, Y, T, V, W, X]);
+
+    graph.addEdge(S, P);
+    graph.addEdge(S, U);
+
+    graph.addEdge(U, Q);
+    graph.addEdge(U, R);
+    graph.addEdge(U, Y);
+
+    graph.addEdge(Q, T);
+
+    expect(graph.hasCycle()).toBeFalsy();
+
+    graph.addEdge(V, W);
+    graph.addEdge(V, X);
+
+    expect(graph.hasCycle()).toBeFalsy();
+  });
+
+  it("should return true if graph has a cycle", function() {
+    let graph = new Graph();
+    let S = new Node("S");
+    let P = new Node("P");
+    let U = new Node("U");
+    let X = new Node("X");
+    let Q = new Node("Q");
+    let Y = new Node("Y");
+    let V = new Node("V");
+    let R = new Node("R");
+    let W = new Node("W");
+    let T = new Node("T");
+
+    graph.addVertices([S, P, U, X, Q, Y, V, R, W, T]);
+
+    graph.addEdge(S, P);
+    graph.addEdge(S, U);
+
+    graph.addEdge(P, X);
+    graph.addEdge(U, X);
+
+    graph.addEdge(P, Q);
+    graph.addEdge(U, V);
+
+    graph.addEdge(X, Q);
+    graph.addEdge(X, Y);
+    graph.addEdge(X, V);
+
+    graph.addEdge(Q, R);
+    graph.addEdge(Y, R);
+
+    graph.addEdge(Y, W);
+    graph.addEdge(V, W);
+
+    graph.addEdge(R, T);
+    graph.addEdge(W, T);
+
+    expect(graph.hasCycle()).toBeTruthy();
+
+    graph = new Graph();
+
+    graph.addVertices([S, P, U, X, Q, Y, V, R, W, T]);
+
+    graph.addEdge(S, P);
+    graph.addEdge(S, U);
+
+    graph.addEdge(U, Q);
+    graph.addEdge(U, R);
+    graph.addEdge(U, Y);
+
+    graph.addEdge(Q, T);
+
+    graph.addEdge(V, W);
+    graph.addEdge(V, X);
+    graph.addEdge(W, X);
+
+    expect(graph.hasCycle()).toBeTruthy();
+  });
+});
